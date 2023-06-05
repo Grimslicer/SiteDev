@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("../node_modules/bootstrap/dist/css/bootstrap.min.css");
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+.SetCardFlexCol {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.setGradient {
+  background: rgb(2, 0, 36);
+  background: radial-gradient(
+    circle,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 9, 121, 1) 53%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  border: none;
+}

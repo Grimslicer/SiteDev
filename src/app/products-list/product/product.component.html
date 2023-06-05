@@ -1,0 +1,22 @@
+<div
+  class="container flex d-flex flex-row justify-content-center"
+  *ngIf="product"
+>
+  <div class="card" style="width: 28rem">
+    <img
+      [src]="product.thumbnail"
+      class="card-img-top"
+      alt="Product Image"
+      style="height: 100% !important"
+    />
+    <div class="card-body" style="height: 100%">
+      <h5 class="card-title">{{ product.brand }}</h5>
+      <p class="card-text">
+        {{ product.description }}
+      </p>
+      <div class="button text-center mt-2">
+        <button class="btn btn-primary setGradient">See Details</button>
+      </div>
+    </div>
+  </div>
+</div>
