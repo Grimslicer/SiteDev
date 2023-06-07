@@ -1,5 +1,9 @@
 import { ProductsService } from '../services/products.service';
 
+export interface CartItems {
+  name: string;
+  products: Products[];
+}
 export interface Products {
   id: number;
   title: string;
@@ -12,6 +16,9 @@ export interface Products {
   category: string;
   thumbnail: string;
   images: string;
+
+  // Not from server
+  qta_cart?: number;
 }
 
 // export class Product implements Products {

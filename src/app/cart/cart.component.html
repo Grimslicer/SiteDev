@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="CartContainer" *ngIf="this.items">
+    <div
+      class="d-flex flex-row"
+      style="align-items: center; justify-content: space-evenly"
+      *ngFor="let product of items; let i = index"
+    >
+      <h1 class="SetText">Product: {{ product.brand }}</h1>
+      <h1>Quantity: {{ product.qta_cart }}</h1>
+      <button class="btn btn-primary">Delete product</button>
+    </div>
+  </div>
+</div>

@@ -12,6 +12,7 @@ import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductComponent } from './products-list/product/product.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FormsModule } from '@angular/forms';
     FooterComponent,
     ProductsListComponent,
     ProductComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule,
