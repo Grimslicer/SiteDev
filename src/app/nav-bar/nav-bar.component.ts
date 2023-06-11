@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Products } from '../models/products.model';
+import { CartItems, Products } from '../models/products.model';
 import { CartService } from '../services/cart.service';
 
 @Component({
@@ -11,12 +11,14 @@ import { CartService } from '../services/cart.service';
 export class NavBarComponent implements OnInit {
   constructor(public router: Router, private cart: CartService) {}
 
-  items: Products[] = [];
+  items: CartItems;
+  products: Products[] = [];
+
   ngOnInit(): void {
-    this.cart.addToCartEvent.subscribe((product: Products[]) => {
-      this.items = this.cart.getItems();
-      console.log('The items inside my cart in the navbar are', this.items);
-    });
+    this.cart.loadItemsFromLocalStorage();
+    this.items = this.cart.getItems(); // Assign the value of items
+
+    this.products = this.items.products; // Ensure items are loaded from localStorage
   }
 
   goToCart() {

@@ -1,27 +1,25 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Products } from '../models/products.model';
+import { CartItems, Products } from '../models/products.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
+  private items: CartItems = { products: [] };
   addToCartEvent: EventEmitter<Products> = new EventEmitter<Products>();
-
-  items: Products[] = [];
 
   constructor() {
     this.loadItemsFromLocalStorage();
   }
 
   addToCart(product: Products) {
-    console.log(typeof this.items);
-    const existingProductIndex = this.items.findIndex(
+    const existingProductIndex = this.items.products.findIndex(
       (item) => item.id === product.id
     );
 
     if (existingProductIndex !== -1) {
       // Product already exists in the cart, update the quantity
-      const existingProduct = this.items[existingProductIndex];
+      const existingProduct = this.items.products[existingProductIndex];
       if (existingProduct.qta_cart) {
         existingProduct.qta_cart += 1;
       } else {
@@ -30,28 +28,27 @@ export class CartService {
     } else {
       // Product does not exist in the cart, push a new product
       product.qta_cart = 1;
-      this.items.push(product);
+      this.items.products.push(product);
     }
 
     this.saveItemsToLocalStorage();
-    console.log('Items are:', this.items);
   }
 
-  getItems() {
+  getItems(): CartItems {
     return this.items;
   }
 
-  private loadItemsFromLocalStorage() {
+  public loadItemsFromLocalStorage() {
     const storedItems = localStorage.getItem('cartItems');
     if (storedItems) {
       try {
         this.items = JSON.parse(storedItems);
-        if (!Array.isArray(this.items)) {
-          this.items = [];
+        if (!Array.isArray(this.items.products)) {
+          this.items.products = [];
         }
       } catch (error) {
         console.error('Error parsing stored items:', error);
-        this.items = [];
+        this.items.products = [];
       }
     }
   }
@@ -60,13 +57,24 @@ export class CartService {
     localStorage.setItem('cartItems', JSON.stringify(this.items));
   }
 
-  private removeItemsFromLocalStorage() {
+  public saveItemToLocalStorage(product: Products) {
+    const storedItems = localStorage.getItem('cartItems');
+    const items = storedItems ? JSON.parse(storedItems) : { products: [] };
+    items.products.push(product);
+
+    localStorage.setItem('cartItems', JSON.stringify(items));
+  }
+
+  public removeItemsFromLocalStorage() {
     localStorage.removeItem('cartItems');
   }
 
-  clearCart() {
-    this.items = [];
-    this.removeItemsFromLocalStorage();
-    return this.items;
+  public removeItemFromLocalStorage(product_index: number) {
+    const storedItems = localStorage.getItem('cartItems');
+    const items = storedItems ? JSON.parse(storedItems) : { products: [] };
+
+    items.products.splice(product_index, 1);
+
+    localStorage.setItem('cartItems', JSON.stringify(items));
   }
 }

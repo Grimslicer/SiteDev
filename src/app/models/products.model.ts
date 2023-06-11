@@ -1,7 +1,7 @@
 import { ProductsService } from '../services/products.service';
 
 export interface CartItems {
-  name: string;
+  name?: string;
   products: Products[];
 }
 export interface Products {

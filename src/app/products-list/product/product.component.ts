@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Products } from 'src/app/models/products.model';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductsService } from 'src/app/services/products.service';
@@ -17,7 +17,8 @@ export class ProductComponent implements OnInit {
   constructor(
     private productService: ProductsService,
     private route: ActivatedRoute,
-    private cart: CartService
+    private cart: CartService,
+    public router: Router
   ) {}
 
   ngOnInit() {
@@ -25,6 +26,7 @@ export class ProductComponent implements OnInit {
       this.productId = +params['id']; // Convert the id to a number using the '+' operator
       this.getProduct(this.productId);
       this.fetchProductData(); // Fetch the product list
+      this.cart.loadItemsFromLocalStorage();
     });
   }
 
@@ -56,5 +58,6 @@ export class ProductComponent implements OnInit {
     this.cart.addToCart(product);
     console.log('The product is', product);
     this.cart.addToCartEvent.emit(product);
+    this.router.navigate(['/cart']);
   }
 }
